@@ -1,0 +1,23 @@
+{
+  "timezone": "America/New_York",
+  "window_days": 365,
+  "ics_sources": {
+    "terplink": {
+      "url": "https://terplink.umd.edu/events.ics",
+      "role": "include"
+    },
+    "cs": {
+      "url": "https://www.cs.umd.edu/events/ical/umdcs_calendar.ics",
+      "role": "include",
+      "host": "Department of Computer Science"
+    },
+    "athletics": {
+      "url": "http://umterps.com/api/v2/Calendar/subscribe?type=ics&downloadFile=false",
+      "role": "exclude",
+      "note": "Used only to suppress games already on the athletics calendar's own subscription."
+    }
+  },
+  "umd_calendar": {
+    "search_url": "https://calendar.umd.edu/search?start={start}&end={end}"
+  }
+}

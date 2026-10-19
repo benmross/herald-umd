@@ -1,0 +1,51 @@
+{
+  "name": "umd",
+  "description": "UMD campus events on a Google calendar of their own: TerpLink and CS department feeds, calendar.umd.edu, STAMP and Careers, with a model deciding once per event whether it belongs, by your own criteria.",
+  "version": "0.2.0",
+  "enabled": true,
+  "requires_capabilities": ["google"],
+  "setup": [
+    {
+      "key": "calendars.write.campus_event",
+      "prompt": "The name of the Google calendar campus events should go on. Create it first; Herald manages everything on it",
+      "default": "UMD Campus Events"
+    },
+    {
+      "key": "umd.review_criteria",
+      "prompt": "Which campus events do you want on that calendar, and which should be left off? Plain sentences, as specific as you like (for example: tech talks, free food, concerts and big parties yes; religious services, recurring club meetings and anything for grad students no)",
+      "required": false
+    },
+    {
+      "key": "umd.contact_email",
+      "prompt": "Your UMD email, sent with every scrape so a campus webmaster can contact you instead of blocking you",
+      "example": "you@umd.edu"
+    },
+    {
+      "key": "calendars.campus_events.window_days",
+      "prompt": "How many days ahead to keep events on the calendar",
+      "type": "number",
+      "default": 365,
+      "required": false
+    },
+    {
+      "key": "calendars.campus_events.review_model",
+      "prompt": "Which model judges the events (blank for your usual one)",
+      "required": false
+    }
+  ],
+  "steps": [
+    "Create a Google calendar with the name you chose (Google Calendar > Settings > Add calendar > Create new calendar). Herald writes to it and nothing else; you can hide it when you only want your own events.",
+    "Install the scrapers' packages into Herald's venv: ~/herald/venv/bin/pip install beautifulsoup4 lxml",
+    "If your criteria are long, they can live in your ledger instead: a section headed \"## Campus events calendar review\" in identity/preferences.md is read in place of umd.review_criteria.",
+    "Turn it on with herald ext enable umd, then herald services install for the review timer. The first scrape takes about a minute; the first review runs within six hours, or now with herald cycle campus_review."
+  ],
+  "provides_capabilities": [
+    {
+      "key": "campus_events",
+      "title": "UMD campus events",
+      "summary": "Every event the university publishes, judged by your criteria, on a calendar of its own.",
+      "settings": ["calendars.write.campus_event", "umd.contact_email"],
+      "setup_hint": "herald ext setup umd"
+    }
+  ]
+}
